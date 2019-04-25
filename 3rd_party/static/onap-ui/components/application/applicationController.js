@@ -20,17 +20,28 @@
         .controller('ApplicationController', ApplicationController);
 
     ApplicationController.$inject = [
-        '$http', '$stateParams', '$window', '$sce',
+        '$http', '$state', '$stateParams', '$window', '$sce',
         '$uibModal', 'testapiApiUrl', 'raiseAlert', 'ngDialog', '$scope'
     ];
 
     /**
      */
-    function ApplicationController($http, $stateParams, $window, $sce,
+    function ApplicationController($http, $state, $stateParams, $window, $sce,
         $uibModal, testapiApiUrl, raiseAlert, ngDialog, $scope) {
 
         var ctrl = this;
 
+        /** Check to see if this page should display community results. */
+        ctrl.isAdministrator = $scope.auth.currentUser.role.indexOf('administrator') != -1;
+        // Should only be on user-results-page if authenticated.
+        if (!$scope.auth.isAuthenticated) {
+            $state.go('home');
+        }
+        // Should only be on applications if administrator
+        if (!ctrl.isAdministrator) {
+            $state.go('home');
+        }
+        
         function init() {
             ctrl.applications = [];
 
