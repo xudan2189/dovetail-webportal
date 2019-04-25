@@ -60,7 +60,7 @@
         </div>
       </script>
       <tbody style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-        <tr ng-if="results.status != 'review' &&  auth.currentUser.role.indexOf('administrator') != -1"
+        <tr ng-if="auth.currentUser.role.indexOf('administrator') != -1"
             ng-repeat="app in ctrl.applications">
           <td>{{ app.creation_date | limitTo: 10 }}</td>
           <td>{{ app.organization_name }}</td>
