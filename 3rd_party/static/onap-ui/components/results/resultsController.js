@@ -575,7 +575,7 @@
                     ctrl.currentPage = ctrl.data.pagination.current_page;
                     ctrl.numPages = ctrl.data.pagination.total_pages;
                     if (ctrl.PageName === 'MyResults') {
-                        for (var i=0; i<data.tests.length-1; i++) {
+                        for (var i=0; i<data.tests.length; i++) {
                             if (data.tests[i].owner !== ctrl.currentUser) {
                                 var sharing = false;
                                 if (data.tests[i].shared !== null){
