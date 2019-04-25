@@ -20,15 +20,25 @@
         .controller('ApplicationController', ApplicationController);
 
     ApplicationController.$inject = [
-        '$http', '$stateParams', '$window', '$sce',
+        '$http', '$state', '$stateParams', '$window', '$sce',
         '$uibModal', 'testapiApiUrl', 'raiseAlert', 'ngDialog', '$scope'
     ];
 
-    function ApplicationController ($http, $stateParams, $window, $sce,
+    function ApplicationController ($http, $state, $stateParams, $window, $sce,
         $uibModal, testapiApiUrl, raiseAlert, ngDialog, $scope) {
 
         var ctrl = this;
-//        ctrl.uploadLogo = uploadLogo;
+        
+        /** Check to see if this page should display community results. */
+        ctrl.isAdministrator = $scope.auth.currentUser.role.indexOf('administrator') != -1;
+        // Should only be on user-results-page if authenticated.
+        if (!$scope.auth.isAuthenticated) {
+            $state.go('home');
+        }
+        // Should only be on applications if administrator
+        if (!ctrl.isAdministrator) {
+            $state.go('home');
+        }
 
         function init() {
             ctrl.applications = [];
@@ -39,7 +49,6 @@
             ctrl.numPages = null;
             ctrl.lab_tpl = "lab.tpl.html";
             ctrl.product_tpl = "product.tpl.html";
-            //ctrl.lab_html=$sce.trustAsHtml('<div>{{app.lab_email}}</div><div>{{app.lab_address}}</div><div>{{app.lab_phone}}</div>');
 
             getApplication();
         }
