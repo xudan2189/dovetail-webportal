@@ -148,7 +148,7 @@
         }
 
         // Should only be on user-results-page if authenticated.
-        if (ctrl.isUserResults && !$scope.auth.isAuthenticated) {
+        if (!ctrl.isUserResults && !ctrl.isReviewer) {
             $state.go('home');
         }
 
